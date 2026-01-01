@@ -7,8 +7,8 @@ const f = createUploadthing();
 
 export const ourFileRouter = {
   mediaUploader: f({
-    image: { maxFileSize: "4MB" },
-    video: { maxFileSize: "16MB" },
+    image: { maxFileSize: "4MB", maxFileCount: 20 },
+    video: { maxFileSize: "16MB", maxFileCount: 5 },
   })
     .input(z.object({ groupId: z.string() }))
 
