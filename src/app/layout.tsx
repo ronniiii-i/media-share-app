@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import Navbar from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -23,9 +24,10 @@ export default function RootLayout({
     <html lang="en" className={`${geist.variable}`}>
       <body className="flex min-h-screen flex-col items-center">
         <Navbar />
-        <div className="p-12 w-full">
+        <div className="w-full">
         {children}
         </div>
+        <Footer />
       </body>
     </html>
   );
