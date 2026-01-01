@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { db } from "@/server/db";
 import { createGroup } from "./actions";
 
+import Link from "next/link";
+
 export default async function GroupsPage() {
   const session = await auth();
 
@@ -45,19 +47,33 @@ export default async function GroupsPage() {
         </div>
 
         <h1 className="mb-6 text-3xl font-extrabold">My Groups</h1>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {groups.map((group) => (
-            <div
-              key={group.id}
-              className="rounded-xl border border-white/20 bg-white/10 p-6"
-            >
-              <h2 className="text-xl font-bold">{group.name}</h2>
-              <p className="text-sm text-white/60">
-                Created {new Date(group.createdAt).toLocaleDateString()}
+        <div className="mt-8 w-full max-w-md">
+          <h2 className="mb-4 text-xl font-bold">Your Groups</h2>
+          <div className="flex flex-col gap-4">
+            {groups.length === 0 && (
+              <p className="text-gray-400 italic">
+                No groups found. Create one above!
               </p>
-            </div>
-          ))}
-          {groups.length === 0 && <p>No groups found. Create one above!</p>}
+            )}
+            {groups.map((group) => (
+              <Link
+                key={group.id}
+                href={`/groups/${group.id}`}
+                className="flex items-center justify-between rounded-xl bg-white/10 p-4 transition hover:bg-white/20"
+              >
+                <div>
+                  <h3 className="text-lg font-semibold">{group.name}</h3>
+                  {group.description && (
+                    <p className="text-sm text-gray-400">{group.description}</p>
+                  )}
+                  <p className="text-sm text-gray-400">
+                    Created {new Date(group.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <span className="text-2xl text-white/50">→</span>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </main>
