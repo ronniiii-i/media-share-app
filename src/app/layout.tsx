@@ -21,7 +21,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
-      <body className="flex min-h-screen flex-col items-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+      <body className="flex min-h-screen flex-col items-center">
         <Navbar />
         <div className="p-12 w-full">
         {children}
