@@ -28,47 +28,52 @@ export default function CreateGroupButton() {
     }
   };
 
-  return (
-    <>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="rounded-full bg-[hsl(280,100%,70%)] px-6 py-2 text-sm font-bold text-white shadow-lg shadow-purple-500/20 transition hover:opacity-90"
-      >
-        + New Group
-      </button>
+ return (
+   <>
+     <button
+       onClick={() => setIsOpen(true)}
+       className="bg-primary text-primary-foreground rounded-xl px-6 py-2 text-sm font-bold shadow-sm transition hover:opacity-90"
+     >
+       + New Group
+     </button>
 
-      {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-          <div className="animate-in fade-in zoom-in w-full max-w-sm rounded-3xl border border-white/10 bg-[#1a1b36] p-6 shadow-2xl duration-200">
-            <h2 className="mb-4 text-xl font-bold text-white">
-              Create a New Group
-            </h2>
-            <input
-              autoFocus
-              placeholder="Family Vacation, Project X..."
-              className="mb-6 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white focus:border-[hsl(280,100%,70%)] focus:outline-none"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleCreate()}
-            />
-            <div className="flex gap-3">
-              <button
-                onClick={() => setIsOpen(false)}
-                className="flex-1 rounded-xl bg-white/5 py-3 text-sm font-semibold transition hover:bg-white/10"
-              >
-                Cancel
-              </button>
-              <button
-                disabled={isPending}
-                onClick={handleCreate}
-                className="flex-1 rounded-xl bg-[hsl(280,100%,70%)] py-3 text-sm font-bold text-white disabled:opacity-50"
-              >
-                {isPending ? "Creating..." : "Create"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
+     {isOpen && (
+       <div className="bg-background fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
+         <div className="animate-in fade-in zoom-in border-border bg-secondary w-full max-w-sm rounded-2xl border p-6 shadow-2xl duration-200">
+           <h2 className="text-foreground mb-1 text-xl font-bold">
+             Create Group
+           </h2>
+           <p className="text-muted-foreground mb-6 text-sm">
+             Give your new vault a name.
+           </p>
+
+           <input
+             autoFocus
+             placeholder="e.g. Summer Memories"
+             className="border-border bg-background text-foreground placeholder:text-muted-foreground/50 focus:ring-primary mb-6 w-full rounded-lg border px-4 py-3 focus:ring-1 focus:outline-none"
+             value={name}
+             onChange={(e) => setName(e.target.value)}
+             onKeyDown={(e) => e.key === "Enter" && handleCreate()}
+           />
+
+           <div className="flex gap-3">
+             <button
+               onClick={() => setIsOpen(false)}
+               className="bg-background border-border hover:bg-accent flex-1 rounded-lg border py-3 text-sm font-medium transition"
+             >
+               Cancel
+             </button>
+             <button
+               disabled={isPending}
+               onClick={handleCreate}
+               className="bg-primary text-primary-foreground flex-1 rounded-lg py-3 text-sm font-bold disabled:opacity-50"
+             >
+               {isPending ? "Creating..." : "Confirm"}
+             </button>
+           </div>
+         </div>
+       </div>
+     )}
+   </>
+ );
 }

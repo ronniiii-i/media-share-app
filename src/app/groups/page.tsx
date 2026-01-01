@@ -31,17 +31,20 @@ export default async function DashboardPage() {
   ].sort((a, b) => b.name.localeCompare(a.name));
 
   return (
-    <main className="min-h-screen bg-[#15162c] p-8 text-white">
+    // Updated background to bg-background (Stone Brown)
+    <main className="bg-background text-foreground min-h-screen p-8">
       <div className="mx-auto max-w-5xl">
         <header className="mb-12 flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold">Your Vaults</h1>
-            <p className="text-gray-400">All your shared media in one place.</p>
+            <h1 className="text-4xl font-bold tracking-tight">Your Vaults</h1>
+            <p className="text-muted-foreground mt-1">
+              All your shared media in one place.
+            </p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-3">
             <Link
               href="/settings"
-              className="rounded-full border border-white/10 px-6 py-2 text-sm font-semibold hover:bg-white/5"
+              className="border-border bg-secondary/50 hover:bg-secondary rounded-xl border px-5 py-2 text-sm font-medium transition"
             >
               ⚙️ Settings
             </Link>
@@ -53,9 +56,10 @@ export default async function DashboardPage() {
           {allGroups.map((group) => (
             <GroupCard key={group.id} group={group} isOwner={group.isOwner} />
           ))}
+
           {allGroups.length === 0 && (
-            <div className="col-span-full rounded-3xl border border-dashed border-white/10 py-20 text-center">
-              <p className="text-gray-500">
+            <div className="border-border col-span-full rounded-3xl border border-dashed py-20 text-center">
+              <p className="text-muted-foreground">
                 No groups yet. Create one to get started!
               </p>
             </div>
@@ -80,17 +84,25 @@ function GroupCard({
   return (
     <Link
       href={`/groups/${group.id}`}
-      className="group block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-white/20 hover:bg-white/10"
+      // Updated to bg-secondary with a subtle border
+      className="group border-border bg-secondary hover:border-primary/30 block rounded-2xl border p-6 transition-all hover:scale-[1.02]"
     >
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold">{group.name}</h3>
-        <span className="text-xs font-medium tracking-widest text-gray-500 uppercase">
+        <h3 className="text-foreground text-lg font-bold">{group.name}</h3>
+        <span className="text-muted-foreground bg-background/50 rounded-md px-2 py-1 text-[10px] font-bold tracking-widest uppercase">
           {isOwner ? "Owner" : "Member"}
         </span>
       </div>
-      <div className="mt-4 flex gap-4 text-sm text-gray-400">
-        <span>🖼️ {group._count.media} Files</span>
-        <span>👤 {group._count.members} Members</span>
+
+      <div className="text-muted-foreground mt-6 flex gap-4 text-xs font-medium">
+        <div className="flex items-center gap-1.5">
+          <span className="opacity-70">🖼️</span>
+          <span>{group._count.media} Files</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="opacity-70">👤</span>
+          <span>{group._count.members} Members</span>
+        </div>
       </div>
     </Link>
   );

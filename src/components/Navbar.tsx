@@ -6,12 +6,12 @@ export default async function Navbar() {
   const session = await auth();
 
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-between border-b border-white/10 bg-[#15162c]/50 px-8 py-4 backdrop-blur-md w-full">
+    <nav className="border-border bg-background/80 sticky top-0 z-50 flex w-full items-center justify-between border-b px-8 py-4 backdrop-blur-md">
       <Link
         href="/groups"
-        className="text-2xl font-extrabold tracking-tight text-white"
+        className="text-foreground text-2xl font-bold tracking-tighter"
       >
-        MEDIA<span className="text-[hsl(280,100%,70%)]">SHARE</span>
+        MEDIA<span className="text-muted-foreground font-light">SHARE</span>
       </Link>
 
       <div className="flex items-center gap-6">
@@ -19,12 +19,12 @@ export default async function Navbar() {
           <>
             <Link
               href="/groups"
-              className="text-sm font-medium text-gray-300 hover:text-white"
+              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
             >
               Dashboard
             </Link>
             <Link href="/settings" className="group flex items-center gap-2">
-              <div className="relative h-8 w-8 overflow-hidden rounded-full border border-white/20 transition group-hover:border-[hsl(280,100%,70%)]">
+              <div className="border-border group-hover:border-primary relative h-9 w-9 overflow-hidden rounded-full border transition">
                 <Image
                   src={session.user.image ?? ""}
                   alt="Profile"
@@ -37,7 +37,7 @@ export default async function Navbar() {
         ) : (
           <Link
             href="/api/auth/signin"
-            className="rounded-full bg-[hsl(280,100%,70%)] px-4 py-2 text-sm font-semibold text-white"
+            className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-bold transition-opacity hover:opacity-90"
           >
             Sign In
           </Link>
