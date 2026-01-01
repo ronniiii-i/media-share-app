@@ -15,7 +15,7 @@ export default function InviteButton({ inviteCode }: { inviteCode: string }) {
   return (
     <button
       onClick={copyLink}
-      className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium transition hover:bg-white/20 active:scale-95"
+      className="bg-secondary border-border hover:bg-accent flex items-center gap-2 rounded-full rounded-xl border bg-white/10 px-4 py-2 text-sm font-medium transition transition-colors hover:bg-white/20 active:scale-95"
     >
       {copied ? "✅ Link Copied!" : "🔗 Copy Invite Link"}
     </button>

@@ -31,16 +31,16 @@ export default function UploadZone({
           ✕
         </button>
 
-        <div className="w-full max-w-3xl rounded-3xl border border-dashed border-white/20 bg-black p-2 transition-colors hover:border-[hsl(280,100%,70%)]/50">
+        <div className="border-border bg-background hover:border-primary/50 w-full max-w-3xl rounded-2xl border-2 border-dashed p-4 transition-colors">
           <UploadDropzone
             endpoint="mediaUploader"
-            input={{ groupId }}
             appearance={{
               button:
-                "!bg-[hsl(280,100%,60%)] text-white px-4 py-2 rounded-xl after:bg-white/20",
-              container: "border-none bg-transparent py-10",
-              label: "!text-gray-50 hover:!text-[hsl(280,100%,70%)]",
+                "!bg-primary !text-primary-foreground px-4 py-2 rounded-lg !font-bold after:!bg-white/10",
+              container: "border-none bg-transparent py-12",
+              label: "text-muted-foreground hover:text-primary",
             }}
+            input={{ groupId }}
             onClientUploadComplete={() => {
               router.refresh();
             }}

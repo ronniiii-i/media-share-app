@@ -35,10 +35,12 @@ export default function SettingsModal({
     );
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-3xl border border-white/10 bg-[#1a1b36] p-6 shadow-2xl">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
+      <div className="border-border bg-background w-full max-w-md rounded-2xl border p-8 shadow-2xl">
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-white">Group Settings</h2>
+          <h2 className="text-foreground mb-6 text-xl font-bold">
+            Group Settings
+          </h2>
           <button
             onClick={() => setIsOpen(false)}
             className="text-gray-400 hover:text-white"
@@ -50,18 +52,18 @@ export default function SettingsModal({
         {isOwner && (
           <div className="mb-8 space-y-4">
             <div>
-              <label className="text-xs font-semibold tracking-wider text-gray-400 uppercase">
-                Group Name
+              <label className="text-muted-foreground text-[10px] font-bold tracking-widest uppercase">
+                Rename Vault
               </label>
-              <div className="mt-1 flex gap-2">
+              <div className="mt-2 flex gap-2">
                 <input
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
-                  className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white focus:border-[hsl(280,100%,70%)] focus:outline-none"
+                  className="border-border bg-background text-foreground focus:ring-primary flex-1 rounded-lg border px-4 py-2 outline-none focus:ring-1"
                 />
                 <button
                   onClick={() => renameGroup(group.id, newName)}
-                  className="rounded-lg bg-white/10 px-4 py-2 text-sm font-bold hover:bg-white/20"
+                  className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-bold hover:opacity-90"
                 >
                   Save
                 </button>
@@ -76,10 +78,13 @@ export default function SettingsModal({
           </p>
           <div className="space-y-2">
             {group.members.map(
-              (m: { userId: string; user: { name: string } }) => (
+              (m: {
+                userId: string;
+                user: { name: string; image?: string };
+              }) => (
                 <div
                   key={m.userId}
-                  className="flex items-center justify-between rounded-lg bg-white/5 p-2"
+                  className="bg-background/50 border-border/50 flex items-center justify-between rounded-lg rounded-xl border bg-white/5 p-2 p-3"
                 >
                   <div className="flex items-center gap-2">
                     {m.user.image && (
@@ -120,7 +125,7 @@ export default function SettingsModal({
           </p>
           <button
             onClick={() => confirm("Leave this group?") && leaveGroup(group.id)}
-            className="w-full rounded-xl bg-orange-500/10 py-3 text-sm font-bold text-orange-500 transition hover:bg-orange-500/20"
+            className="w-full rounded-xl border border-orange-900/30 bg-orange-500/10 bg-orange-950/20 py-3 text-sm font-bold text-orange-200/60 text-orange-500 transition hover:bg-orange-500/20 hover:bg-orange-900/20"
           >
             Leave Group
           </button>
@@ -131,7 +136,7 @@ export default function SettingsModal({
                 confirm("DELETE ENTIRE GROUP? This cannot be undone.") &&
                 deleteGroup(group.id)
               }
-              className="w-full rounded-xl bg-red-500/10 py-3 text-sm font-bold text-red-500 transition hover:bg-red-500/20"
+              className="w-full rounded-xl border border-red-900/30 bg-red-950/20 py-3 text-sm font-bold text-red-200/60 hover:bg-red-900/20"
             >
               Delete Group Permanently
             </button>

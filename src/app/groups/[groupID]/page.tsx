@@ -69,29 +69,47 @@ export default async function GroupDetailsPage({
       }
     : null;
 
-  return (
-    <main className="flex w-full flex-col items-center justify-start">
-      <div className="flex w-full items-center justify-between">
-        <Link
-          href="/groups"
-          className="text-sm font-semibold text-[hsl(280,100%,70%)] hover:underline"
-        >
-          ← Back to My Groups
-        </Link>
-        <div className="flex items-center gap-4">
-          <InviteButton inviteCode={group?.inviteCode ?? ""} />
-          <UploadSection groupId={params.groupID} />{" "}
-          {transformedGroup && (
-            <SettingsModal group={transformedGroup} isOwner={isOwner} />
-          )}
-        </div>
-      </div>
+ return (
+   <main className="bg-background text-foreground flex w-full flex-col items-center justify-start p-8">
+     <div className="flex w-full max-w-7xl items-center justify-between">
+       <Link
+         href="/groups"
+         className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
+       >
+         ← Back to My Groups
+       </Link>
+       <div className="flex items-center gap-3">
+         <InviteButton inviteCode={group?.inviteCode ?? ""} />
+         <UploadSection groupId={params.groupID} />
+         {transformedGroup && (
+           <SettingsModal group={transformedGroup} isOwner={isOwner} />
+         )}
+       </div>
+     </div>
 
-      <div className="mt-4 mb-8 flex items-center gap-4">
-        <h1 className="text-4xl font-bold">{group?.name}</h1>
-      </div>
+     <div className="mt-8 mb-12 w-full max-w-7xl text-left">
+       <h1 className="text-5xl font-bold tracking-tight">{group?.name}</h1>
+       <p className="text-muted-foreground mt-2">Vault Storage</p>
+     </div>
 
-      <MediaGallery media={serializedMedia} groupId={params.groupID} />
-    </main>
-  );
+     <div className="w-full max-w-7xl">
+       <MediaGallery media={serializedMedia} groupId={params.groupID} />
+     </div>
+
+     <div className="space-y-4 p-10">
+       <div className="bg-background border-border h-10 w-full border">
+         Background & Border Test
+       </div>
+       <div className="bg-primary text-primary-foreground h-10 w-full">
+         Primary Test
+       </div>
+       <div className="bg-secondary text-secondary-foreground h-10 w-full">
+         Secondary Test
+       </div>
+       <div className="from-background h-20 w-full bg-gradient-to-t to-transparent">
+         Gradient Test
+       </div>
+     </div>
+   </main>
+ );
 }
