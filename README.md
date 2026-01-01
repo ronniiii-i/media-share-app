@@ -1,29 +1,76 @@
-# Create T3 App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+# MediaShare
+**Elegant, Private, High-Fidelity Media Vaults.**
 
-## What's next? How do I make an app with this?
+MediaShare is an open-source platform designed for those who value privacy and aesthetics. Built with the T3 Stack, it allows you to create private "Vaults" where you can share high-resolution media with your inner circle.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+---
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## 🎨 The Design System: "Sovereign Brown"
+Unlike typical high-contrast dark modes, MediaShare uses a custom-crafted **Espresso & Stone** palette.
+- **Background:** Deep Stone (#1c1917)
+- **Primary:** Warm Bone (#d6d3d1)
+- **Secondary:** Espresso Stone (#292524)
+- **Vibe:** "Friendly but not Bright"—Professional, architectural, and easy on the eyes.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+---
 
-## Learn More
+## 🚀 Tech Stack
+- **Framework:** [Next.js 15](https://nextjs.org) (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Database:** Prisma ORM (PostgreSQL)
+- **Auth:** NextAuth.js / Auth.js (Google OAuth)
+- **Uploads:** UploadThing (Direct-to-S3)
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+---
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## 🛠️ Getting Started
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### 1. Clone the repo
+  
+```bash
+git clone [https://github.com/yourusername/mediashare.git](https://github.com/yourusername/mediashare.git)
+cd mediashare
 
-## How do I deploy this?
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### 2. Environment Variables
+
+Create a `.env` file in the root and add your keys:
+
+```env
+DATABASE_URL="your-db-url"
+AUTH_SECRET="your-secret"
+AUTH_GOOGLE_ID="your-id"
+AUTH_GOOGLE_SECRET="your-secret"
+UPLOADTHING_SECRET="your-secret"
+UPLOADTHING_APP_ID="your-id"
+```
+
+### 3. Install & Run
+
+```bash
+npm install
+npx prisma db push
+npm run dev
+```
+
+---
+
+## 📁 Project Structure
+
+- `/src/app`: Next.js App Router (Pages & API routes)
+- `/src/components`: Reusable UI (Navbar, MediaGrid, Modals)
+- `/src/styles`: Tailwind v4 Global CSS & Theme variables
+- `/src/server`: Server-side logic, Prisma client, and Auth configuration
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**. Feel free to fork, experiment, and build upon it.
+
+---
+
+**Built with intention. Shared with privacy.**
