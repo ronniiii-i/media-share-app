@@ -88,13 +88,15 @@ model GroupMember {
 }
 
 model Media {
-  id          String   @id @default(cuid())
-  url         String   // The link to the file on S3
-  fileType    String   // e.g., "image" or "video"
-  uploadedBy  String
-  groupId     String
-  createdAt   DateTime @default(now())
-  
-  user        User     @relation(fields: [uploadedBy], references: [id])
-  group       Group    @relation(fields: [groupId], references: [id])
+  id        String   @id @default(cuid())
+  url       String
+  name      String
+  type      String   // To track if it's an image or video
+  createdAt DateTime @default(now())
+
+  // Connections
+  groupId   String
+  group     Group    @relation(fields: [groupId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
