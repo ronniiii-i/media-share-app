@@ -1,81 +1,97 @@
+import { db } from "@/server/db";
 import { auth } from "@/server/auth";
 import { redirect } from "next/navigation";
-import { db } from "@/server/db";
-import { createGroup } from "./actions";
-
 import Link from "next/link";
+import CreateGroupButton from "./CreateGroupButton";
 
-export default async function GroupsPage() {
+export default async function DashboardPage() {
   const session = await auth();
+  if (!session) redirect("/api/auth/signin");
 
-  if (!session?.user) {
-    redirect("/");
-  }
+  const owned = await db.group.findMany({
+    where: { ownerId: session.user.id },
+    include: { _count: { select: { media: true, members: true } } },
+  });
 
-  const groups = await db.group.findMany({
+  const joined = await db.groupMember.findMany({
     where: {
-      members: {
-        some: {
-          userId: session.user.id,
-        },
-      },
+      userId: session.user.id,
+      group: { NOT: { ownerId: session.user.id } },
     },
-    orderBy: {
-      createdAt: "desc",
+    include: {
+      group: {
+        include: { _count: { select: { media: true, members: true } } },
+      },
     },
   });
 
-  return (
-    <main className="min-h-screen bg-gradient-to-b from-[#2e026d] to-[#15162c] p-8 text-white">
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-8 rounded-xl border border-white/20 bg-white/5 p-6">
-          <h2 className="mb-4 text-xl font-bold">Create a New Group</h2>
-          <form action={createGroup} className="flex gap-4">
-            <input
-              name="groupName"
-              placeholder="Friend Group Name"
-              className="flex-1 rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-white focus:ring-2 focus:ring-purple-500 focus:outline-none"
-              required
-            />
-            <button
-              type="submit"
-              className="rounded-lg bg-purple-600 px-6 py-2 font-bold transition hover:bg-purple-700"
-            >
-              Create
-            </button>
-          </form>
-        </div>
+  const allGroups = [
+    ...owned.map((g) => ({ ...g, isOwner: true })),
+    ...joined.map((m) => ({ ...m.group, isOwner: false })),
+  ].sort((a, b) => b.name.localeCompare(a.name));
 
-        <h1 className="mb-6 text-3xl font-extrabold">My Groups</h1>
-        <div className="mt-8 w-full max-w-md">
-          <h2 className="mb-4 text-xl font-bold">Your Groups</h2>
-          <div className="flex flex-col gap-4">
-            {groups.length === 0 && (
-              <p className="text-gray-400 italic">
-                No groups found. Create one above!
-              </p>
-            )}
-            {groups.map((group) => (
-              <Link
-                key={group.id}
-                href={`/groups/${group.id}`}
-                className="flex items-center justify-between rounded-xl bg-white/10 p-4 transition hover:bg-white/20"
-              >
-                <div>
-                  <h3 className="text-lg font-semibold">{group.name}</h3>
-                  {group.description && (
-                    <p className="text-sm text-gray-400">{group.description}</p>
-                  )}
-                  <p className="text-sm text-gray-400">
-                    Created {new Date(group.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-                <span className="text-2xl text-white/50">→</span>
-              </Link>
-            ))}
+  return (
+    <main className="min-h-screen bg-[#15162c] p-8 text-white">
+      <div className="mx-auto max-w-5xl">
+        <header className="mb-12 flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold">Your Vaults</h1>
+            <p className="text-gray-400">All your shared media in one place.</p>
           </div>
+          <div className="flex gap-4">
+            <Link
+              href="/settings"
+              className="rounded-full border border-white/10 px-6 py-2 text-sm font-semibold hover:bg-white/5"
+            >
+              ⚙️ Settings
+            </Link>
+            <CreateGroupButton />
+          </div>
+        </header>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {allGroups.map((group) => (
+            <GroupCard key={group.id} group={group} isOwner={group.isOwner} />
+          ))}
+          {allGroups.length === 0 && (
+            <div className="col-span-full rounded-3xl border border-dashed border-white/10 py-20 text-center">
+              <p className="text-gray-500">
+                No groups yet. Create one to get started!
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </main>
+  );
+}
+
+function GroupCard({
+  group,
+  isOwner,
+}: {
+  group: {
+    id: string;
+    name: string;
+    _count: { media: number; members: number };
+  };
+  isOwner: boolean;
+}) {
+  return (
+    <Link
+      href={`/groups/${group.id}`}
+      className="group block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-white/20 hover:bg-white/10"
+    >
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-bold">{group.name}</h3>
+        <span className="text-xs font-medium tracking-widest text-gray-500 uppercase">
+          {isOwner ? "Owner" : "Member"}
+        </span>
+      </div>
+      <div className="mt-4 flex gap-4 text-sm text-gray-400">
+        <span>🖼️ {group._count.media} Files</span>
+        <span>👤 {group._count.members} Members</span>
+      </div>
+    </Link>
   );
 }

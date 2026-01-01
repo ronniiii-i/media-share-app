@@ -27,4 +27,8 @@ export async function createGroup(formData: FormData) {
   });
 
   revalidatePath("/groups");
+  const newGroup = await db.group.findFirst({
+    where: { name: name, ownerId: userId },
+  });
+  return newGroup;
 }
