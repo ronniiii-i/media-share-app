@@ -1,8 +1,8 @@
 import { db } from "@/server/db";
-import Image from "next/image";
 import UploadZone from "./UploadZone";
 import MediaGallery from "./MediaGallery";
-import DeleteButton from "./DeleteButton";
+import InviteButton from "./InviteButton";
+import UploadSection from "./UploadSection";
 
 import Link from "next/link";
 
@@ -19,20 +19,28 @@ export default async function GroupDetailsPage({
     ...item,
     createdAt: item.createdAt.toISOString(),
   }));
+  const group = await db.group.findUnique({
+    where: { id: params.groupID },
+  });
   return (
-    <main className="flex flex-col items-center justify-start">
-      <div className="w-full max-w-5xl">
+    <main className="flex w-full flex-col items-center justify-start">
+      <div className="flex w-full items-center justify-between">
         <Link
           href="/groups"
           className="text-sm font-semibold text-[hsl(280,100%,70%)] hover:underline"
         >
           ← Back to My Groups
         </Link>
+        <div className="flex items-center gap-4">
+          <InviteButton inviteCode={group?.inviteCode ?? ""} />
+          <UploadSection groupId={params.groupID} />
+        </div>
       </div>
 
-      <h1 className="mt-4 mb-8 text-4xl font-bold">Group Media</h1>
+      <div className="mt-4 mb-8 flex items-center gap-4">
+        <h1 className="text-4xl font-bold">{group?.name}</h1>
+      </div>
 
-      <UploadZone groupId={params.groupID} />
       <MediaGallery media={serializedMedia} groupId={params.groupID} />
     </main>
   );
