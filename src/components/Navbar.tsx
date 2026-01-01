@@ -8,7 +8,7 @@ export default async function Navbar() {
   return (
     <nav className="border-border bg-background/80 sticky top-0 z-50 flex w-full items-center justify-between border-b px-8 py-4 backdrop-blur-md">
       <Link
-        href="/groups"
+        href="/"
         className="text-foreground text-2xl font-bold tracking-tighter"
       >
         MEDIA<span className="text-muted-foreground font-light">SHARE</span>
@@ -19,7 +19,7 @@ export default async function Navbar() {
           <>
             <Link
               href="/groups"
-              className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
+              className="bg-primary text-primary-foreground rounded-xl px-6 py-2 text-sm font-bold font-medium shadow-sm transition transition-colors hover:opacity-90"
             >
               Dashboard
             </Link>
