@@ -16,7 +16,7 @@ export default function UploadZone({ groupId }: { groupId: string }) {
         input={{ groupId }}
         onClientUploadComplete={() => {
           alert("Saved to database!");
-          router.refresh(); // This tells the server page to fetch new data
+          router.refresh();
         }}
         onUploadError={(error: Error) => {
           alert(`ERROR! ${error.message}`);

@@ -13,7 +13,7 @@ export default async function GroupDetailsPage({
   });
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start bg-[#15162c] p-12 text-white">
+    <main className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c] p-12 text-white">
       <h1 className="mb-8 text-4xl font-bold">Group Media</h1>
 
       <UploadZone groupId={params.groupId} />
