@@ -96,20 +96,6 @@ export default async function GroupDetailsPage({
        <MediaGallery media={serializedMedia} groupId={params.groupID} />
      </div>
 
-     <div className="space-y-4 p-10">
-       <div className="bg-background border-border h-10 w-full border">
-         Background & Border Test
-       </div>
-       <div className="bg-primary text-primary-foreground h-10 w-full">
-         Primary Test
-       </div>
-       <div className="bg-secondary text-secondary-foreground h-10 w-full">
-         Secondary Test
-       </div>
-       <div className="from-background h-20 w-full bg-gradient-to-t to-transparent">
-         Gradient Test
-       </div>
-     </div>
    </main>
  );
 }
