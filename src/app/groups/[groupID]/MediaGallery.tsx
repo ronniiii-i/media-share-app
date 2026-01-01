@@ -54,7 +54,7 @@ export default function MediaGallery({
 
   return (
     <>
-      <div className="mt-12 grid w-full max-w-5xl grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+      <div className="mt-12 grid w-full grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
         {media.map((item, i) => (
           <div
             key={item.id}
@@ -65,12 +65,9 @@ export default function MediaGallery({
               onClick={(e) => e.stopPropagation()}
               className="relative z-10 flex gap-2"
             >
-              {/* Download Button */}
               <a
                 href={`/api/download?url=${encodeURIComponent(item.url)}&name=${encodeURIComponent(item.name)}`}
                 download={item.name}
-                // target="_blank"
-                // rel="noopener noreferrer"
                 className="absolute top-2 left-2 rounded-md bg-black/50 p-2 text-white opacity-0 backdrop-blur-md transition transition-opacity group-hover:opacity-100 hover:bg-white/40"
                 title="Download"
               >
