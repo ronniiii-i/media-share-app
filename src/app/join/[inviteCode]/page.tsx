@@ -5,16 +5,23 @@ import { redirect } from "next/navigation";
 export default async function JoinPage({
   params,
 }: {
-  params: { inviteCode: string };
+  params: Promise<{ inviteCode: string }>;
 }) {
+  const { inviteCode } = await params;
+
   const session = await auth();
   if (!session) redirect("/api/auth/signin");
 
   const group = await db.group.findUnique({
-    where: { inviteCode: params.inviteCode },
+    where: { inviteCode: inviteCode },
   });
 
-  if (!group) return <div>Invite link invalid or expired.</div>;
+  if (!group)
+    return (
+      <div className="text-muted-foreground p-8 text-center">
+        Invite link invalid or expired.
+      </div>
+    );
 
   const existingMember = await db.groupMember.findFirst({
     where: {
