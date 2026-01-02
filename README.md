@@ -1,29 +1,18 @@
 
 # MediaShare
-**Elegant, Private, High-Fidelity Media Vaults.**
+
+**Your memories, kept in good company.**
 
 MediaShare is an open-source platform designed for those who value privacy and aesthetics. Built with the T3 Stack, it allows you to create private "Vaults" where you can share high-resolution media with your inner circle.
 
----
-
-## 🎨 The Design System: "Sovereign Brown"
-Unlike typical high-contrast dark modes, MediaShare uses a custom-crafted **Espresso & Stone** palette.
-- **Background:** Deep Stone (#1c1917)
-- **Primary:** Warm Bone (#d6d3d1)
-- **Secondary:** Espresso Stone (#292524)
-- **Vibe:** "Friendly but not Bright"—Professional, architectural, and easy on the eyes.
-
----
-
 ## 🚀 Tech Stack
+
 - **Framework:** [Next.js 15](https://nextjs.org) (App Router)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS v4
 - **Database:** Prisma ORM (PostgreSQL)
 - **Auth:** NextAuth.js / Auth.js (Google OAuth)
 - **Uploads:** UploadThing (Direct-to-S3)
-
----
 
 ## 🛠️ Getting Started
 
@@ -56,8 +45,6 @@ npx prisma db push
 npm run dev
 ```
 
----
-
 ## 📁 Project Structure
 
 - `/src/app`: Next.js App Router (Pages & API routes)
@@ -65,12 +52,8 @@ npm run dev
 - `/src/styles`: Tailwind v4 Global CSS & Theme variables
 - `/src/server`: Server-side logic, Prisma client, and Auth configuration
 
----
-
 ## 📜 License
 
 This project is licensed under the **MIT License**. Feel free to fork, experiment, and build upon it.
-
----
 
 **Built with intention. Shared with privacy.**
