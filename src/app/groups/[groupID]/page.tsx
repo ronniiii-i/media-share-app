@@ -1,5 +1,6 @@
 import { db } from "@/server/db";
 import { auth } from "@/server/auth";
+import { type Metadata } from "next";
 
 import SettingsModal from "./SettingsModal";
 
@@ -9,6 +10,15 @@ import UploadSection from "./UploadSection";
 
 import Link from "next/link";
 import { redirect } from "next/navigation";
+
+export async function generateMetadata({ params }: { params: Promise<{ groupID: string }> }): Promise<Metadata> {
+  const { groupID } = await params;
+  const group = await db.group.findUnique({ where: { id: groupID } });
+
+  return {
+    title: group ? `${group.name} Vault` : "Vault Details",
+  };
+}
 
 export default async function GroupDetailsPage({
   params,
