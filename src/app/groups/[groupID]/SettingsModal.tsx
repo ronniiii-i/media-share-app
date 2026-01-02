@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import {
   deleteGroup,
   leaveGroup,
@@ -21,8 +21,34 @@ export default function SettingsModal({
   };
   isOwner: boolean;
 }) {
+  const [isPending, startTransition] = useTransition();
+  const [isRenaming, startRenameTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
   const [newName, setNewName] = useState(group.name);
+
+  const handleRename = () => {
+    if (newName.trim() === "" || newName === group.name) return;
+
+    startRenameTransition(async () => {
+      try {
+        await renameGroup(group.id, newName);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  };
+
+  const handleDelete = () => {
+    if (confirm("DELETE ENTIRE GROUP? This cannot be undone.")) {
+      startTransition(async () => {
+        try {
+          await deleteGroup(group.id);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    }
+  };
 
   if (!isOpen)
     return (
@@ -62,10 +88,11 @@ export default function SettingsModal({
                   className="border-border bg-background text-foreground focus:ring-primary flex-1 rounded-lg border px-4 py-2 outline-none focus:ring-1"
                 />
                 <button
-                  onClick={() => renameGroup(group.id, newName)}
+                  onClick={handleRename}
+                  disabled={isRenaming || newName === group.name}
                   className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-bold hover:opacity-90"
                 >
-                  Save
+                  {isRenaming ? "Renaming..." : "Rename"}
                 </button>
               </div>
             </div>
@@ -132,13 +159,22 @@ export default function SettingsModal({
 
           {isOwner && (
             <button
-              onClick={() =>
-                confirm("DELETE ENTIRE GROUP? This cannot be undone.") &&
-                deleteGroup(group.id)
-              }
-              className="w-full rounded-xl border border-red-900/30 bg-red-950/20 py-3 text-sm font-bold text-red-200/60 hover:bg-red-900/20"
+              onClick={handleDelete}
+              disabled={isPending}
+              className={`w-full rounded-xl py-3 text-sm font-bold ${
+                isPending
+                  ? "cursor-not-allowed bg-red-950/10 text-red-900/50"
+                  : "border border-red-900/30 bg-red-950/20 text-red-200/60 hover:bg-red-900/20"
+              } transition`}
             >
-              Delete Group Permanently
+              {isPending ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="my-auto ml-2 h-4 w-4 animate-spin rounded-full border-2 border-red-500/20 border-t-red-500" />
+                  Deleting Vault...
+                </div>
+              ) : (
+                "Delete Group Permanently"
+              )}
             </button>
           )}
         </div>
